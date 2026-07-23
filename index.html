@@ -1046,7 +1046,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         &lt;input class=&quot;form-control&quot; id=&quot;student-class&quot; name=&quot;studentClass&quot; type=&quot;text&quot; maxlength=&quot;40&quot; placeholder=&quot;Ex. 4TQ INFO&quot;&gt;
         &lt;p class=&quot;text-muted text-small&quot;&gt;Le compte à rebours de 25 minutes démarrera automatiquement.&lt;/p&gt;
         &lt;p id=&quot;start-error&quot; class=&quot;text-destructive text-small hidden&quot; role=&quot;alert&quot;&gt;Indique ton nom et ton prénom avant de commencer.&lt;/p&gt;
-        &lt;button class=&quot;btn btn-primary btn-block&quot; type=&quot;submit&quot;&gt;Commencer l’interrogation&lt;/button&gt;
+        &lt;button id=&quot;start-button&quot; class=&quot;btn btn-primary btn-block&quot; type=&quot;button&quot;&gt;Commencer l’interrogation&lt;/button&gt;
       &lt;/form&gt;
     &lt;/section&gt;
 
@@ -1601,8 +1601,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         }
       }
 
-      $(&#x27;#start-form&#x27;).addEventListener(&#x27;submit&#x27;, (event) =&gt; {
-        event.preventDefault();
+      $(&#x27;#start-button&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
         const name = $(&#x27;#student-name&#x27;).value.trim();
         if (!name) {
           $(&#x27;#start-error&#x27;).classList.remove(&#x27;hidden&#x27;);
