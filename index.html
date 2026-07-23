@@ -9,7 +9,7 @@
 <style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;max-width:736px;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
 </head>
 <body>
-<iframe sandbox="allow-scripts allow-downloads" referrerpolicy="no-referrer" title="Interrogation interactive C#" srcdoc="&lt;!doctype html&gt;
+<iframe sandbox="allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox" referrerpolicy="no-referrer" title="Interrogation interactive C#" srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
@@ -1015,7 +1015,7 @@ html&gt;body{padding:0}&lt;/style&gt;
           &lt;p class=&quot;eyebrow text-small&quot;&gt;Chapitre modèle&lt;/p&gt;
           &lt;h2 id=&quot;start-title&quot;&gt;Variables, types et conditions&lt;/h2&gt;
         &lt;/div&gt;
-        &lt;p&gt;Cette interrogation comporte &lt;strong&gt;8 questions&lt;/strong&gt; pour un total de &lt;strong&gt;20 points&lt;/strong&gt;. Les réponses ne sont pas corrigées automatiquement : elles seront exportées pour une correction pédagogique ultérieure.&lt;/p&gt;
+        &lt;p&gt;Cette interrogation comporte &lt;strong&gt;8 questions&lt;/strong&gt; pour un total de &lt;strong&gt;20 points&lt;/strong&gt;. Les réponses seront transmises pour une correction pédagogique ultérieure.&lt;/p&gt;
         &lt;ul class=&quot;feature-list&quot;&gt;
           &lt;li&gt;QCM, vrai/faux et phrase à compléter&lt;/li&gt;
           &lt;li&gt;Définition reformulée avec ses propres mots&lt;/li&gt;
@@ -1044,10 +1044,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         &lt;input class=&quot;form-control&quot; id=&quot;student-name&quot; name=&quot;studentName&quot; type=&quot;text&quot; autocomplete=&quot;name&quot; maxlength=&quot;80&quot; required placeholder=&quot;Ex. Alex Martin&quot;&gt;
         &lt;label class=&quot;form-label&quot; for=&quot;student-class&quot;&gt;Classe ou groupe&lt;/label&gt;
         &lt;input class=&quot;form-control&quot; id=&quot;student-class&quot; name=&quot;studentClass&quot; type=&quot;text&quot; maxlength=&quot;40&quot; placeholder=&quot;Ex. 4TQ INFO&quot;&gt;
-        &lt;div class=&quot;form-check form-switch&quot;&gt;
-          &lt;input class=&quot;form-check-input&quot; id=&quot;timer-enabled&quot; type=&quot;checkbox&quot; checked&gt;
-          &lt;label class=&quot;form-check-label&quot; for=&quot;timer-enabled&quot;&gt;Activer le compte à rebours de 25 minutes&lt;/label&gt;
-        &lt;/div&gt;
+        &lt;p class=&quot;text-muted text-small&quot;&gt;Le compte à rebours de 25 minutes démarrera automatiquement.&lt;/p&gt;
         &lt;p id=&quot;start-error&quot; class=&quot;text-destructive text-small hidden&quot; role=&quot;alert&quot;&gt;Indique ton nom et ton prénom avant de commencer.&lt;/p&gt;
         &lt;button class=&quot;btn btn-primary btn-block&quot; type=&quot;submit&quot;&gt;Commencer l’interrogation&lt;/button&gt;
       &lt;/form&gt;
@@ -1140,10 +1137,10 @@ html&gt;body{padding:0}&lt;/style&gt;
             &lt;span id=&quot;result-duration&quot; class=&quot;viz-stat-value&quot;&gt;&lt;/span&gt;
           &lt;/div&gt;
         &lt;/div&gt;
-        &lt;p class=&quot;text-muted text-small&quot;&gt;Le fichier JSON contient l’identité, les dates, la durée, la version du questionnaire et toutes les réponses. Il ne contient aucun corrigé.&lt;/p&gt;
+        &lt;p class=&quot;text-muted text-small&quot;&gt;Tes réponses ont été préparées. Utilise le bouton ci-dessous pour terminer la remise.&lt;/p&gt;
         &lt;div class=&quot;viz-row&quot;&gt;
-          &lt;button id=&quot;export-json&quot; class=&quot;btn btn-primary&quot; type=&quot;button&quot;&gt;Exporter les réponses en JSON&lt;/button&gt;
-          &lt;button id=&quot;copy-json&quot; class=&quot;btn&quot; type=&quot;button&quot;&gt;Copier le JSON&lt;/button&gt;
+          &lt;button id=&quot;send-answers&quot; class=&quot;btn btn-primary&quot; type=&quot;button&quot;&gt;Envoyer mes réponses&lt;/button&gt;
+          &lt;button id=&quot;export-json&quot; class=&quot;btn&quot; type=&quot;button&quot;&gt;Préparer à nouveau&lt;/button&gt;
         &lt;/div&gt;
         &lt;p id=&quot;export-status&quot; class=&quot;text-small&quot; aria-live=&quot;polite&quot;&gt;&lt;/p&gt;
       &lt;/div&gt;
@@ -1561,10 +1558,11 @@ html&gt;body{padding:0}&lt;/style&gt;
         $(&#x27;#result-student&#x27;).textContent = state.studentName;
         $(&#x27;#result-answered&#x27;).textContent = answeredCount() + &#x27;/&#x27; + EXAM.questions.length;
         $(&#x27;#result-duration&#x27;).textContent = formatDuration(seconds);
-        $(&#x27;#result-message&#x27;).textContent = &#x27;Merci &#x27; + state.studentName + &#x27;. Exporte maintenant le fichier JSON et remets-le selon les consignes de ton professeur.&#x27;;
+        $(&#x27;#result-message&#x27;).textContent = &#x27;Merci &#x27; + state.studentName + &#x27;. Tes réponses sont prêtes à être envoyées.&#x27;;
         $(&#x27;#header-status&#x27;).textContent = &#x27;Terminée&#x27;;
         showScreen(&#x27;result&#x27;);
-        announce(&#x27;Interrogation validée. Les réponses peuvent être exportées.&#x27;);
+        exportJson();
+        announce(&#x27;Interrogation validée. Les réponses sont prêtes à être envoyées.&#x27;);
       }
 
       function safeFilename(value) {
@@ -1585,7 +1583,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         anchor.click();
         anchor.remove();
         setTimeout(() =&gt; URL.revokeObjectURL(url), 1000);
-        $(&#x27;#export-status&#x27;).textContent = &#x27;Le fichier JSON a été préparé.&#x27;;
+        $(&#x27;#export-status&#x27;).textContent = &#x27;La remise a été préparée.&#x27;;
       }
 
       async function copyJson() {
@@ -1614,15 +1612,13 @@ html&gt;body{padding:0}&lt;/style&gt;
         $(&#x27;#start-error&#x27;).classList.add(&#x27;hidden&#x27;);
         state.studentName = name;
         state.studentClass = $(&#x27;#student-class&#x27;).value.trim();
-        state.timerEnabled = $(&#x27;#timer-enabled&#x27;).checked;
+        state.timerEnabled = true;
         state.startedAt = Date.now();
-        state.deadline = state.timerEnabled ? state.startedAt + EXAM.durationMinutes * 60 * 1000 : null;
-        $(&#x27;#timer-wrap&#x27;).classList.toggle(&#x27;hidden&#x27;, !state.timerEnabled);
+        state.deadline = state.startedAt + EXAM.durationMinutes * 60 * 1000;
+        $(&#x27;#timer-wrap&#x27;).classList.remove(&#x27;hidden&#x27;);
         $(&#x27;#header-status&#x27;).textContent = &#x27;En cours&#x27;;
-        if (state.timerEnabled) {
-          updateTimer();
-          state.timerHandle = setInterval(updateTimer, 1000);
-        }
+        updateTimer();
+        state.timerHandle = setInterval(updateTimer, 1000);
         renderQuestion();
         showScreen(&#x27;quiz&#x27;);
         announce(&#x27;Interrogation commencée. Question 1.&#x27;);
@@ -1643,7 +1639,9 @@ html&gt;body{padding:0}&lt;/style&gt;
         renderNavigation();
       });
       $(&#x27;#export-json&#x27;).addEventListener(&#x27;click&#x27;, exportJson);
-      $(&#x27;#copy-json&#x27;).addEventListener(&#x27;click&#x27;, copyJson);
+      $(&#x27;#send-answers&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+        window.open(&#x27;https://www.dropbox.com/request/i9fa9oecf4qxh6zoe6q0&#x27;, &#x27;_blank&#x27;, &#x27;noopener&#x27;);
+      });
 
       $(&#x27;#header-status&#x27;).textContent = &#x27;Non commencée&#x27;;
     })();
