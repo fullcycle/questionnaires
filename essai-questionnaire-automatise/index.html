@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Preuve de concept : questionnaire C# avec remise des réponses dans Dropbox.">
+  <title>Essai questionnaire automatisé</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #162238;
+      --muted: #5c687b;
+      --line: #dce3ee;
+      --panel: #ffffff;
+      --soft: #f3f7fc;
+      --primary: #0b57d0;
+      --primary-dark: #073f9b;
+      --dropbox: #06f;
+      --success: #087a4b;
+      --shadow: 0 18px 50px rgba(36, 50, 74, .13);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        radial-gradient(circle at top left, rgba(11, 87, 208, .11), transparent 34rem),
+        var(--soft);
+      color: var(--ink);
+      font: 16px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 32px auto;
+    }
+
+    .hero,
+    .instructions,
+    .questionnaire {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: clamp(24px, 5vw, 48px);
+      background:
+        linear-gradient(115deg, rgba(11, 87, 208, .96), rgba(7, 63, 155, .98)),
+        var(--primary);
+      color: #fff;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 12px;
+      padding: 6px 11px;
+      border: 1px solid rgba(255, 255, 255, .35);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .11);
+      font-size: .8rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 780px;
+      font-size: clamp(2rem, 6vw, 4rem);
+      line-height: 1.04;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 18px 0 0;
+      color: rgba(255, 255, 255, .88);
+      font-size: 1.08rem;
+    }
+
+    .instructions {
+      margin-top: 20px;
+      padding: 24px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .steps li {
+      position: relative;
+      min-height: 118px;
+      padding: 18px 18px 18px 60px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .step-number {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 850;
+    }
+
+    .steps strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .steps span:last-child {
+      color: var(--muted);
+      font-size: .93rem;
+    }
+
+    .questionnaire {
+      overflow: hidden;
+      margin-top: 20px;
+    }
+
+    .questionnaire-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .questionnaire-header h2 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .questionnaire-header p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    iframe {
+      display: block;
+      width: 100%;
+      min-height: 840px;
+      border: 0;
+      background: #fff;
+    }
+
+    .actions {
+      position: sticky;
+      bottom: 14px;
+      z-index: 10;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin: 20px auto 0;
+      padding: 16px;
+      border: 1px solid #b7d2ff;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .96);
+      box-shadow: 0 14px 40px rgba(23, 46, 84, .22);
+      backdrop-filter: blur(12px);
+    }
+
+    .actions p {
+      flex: 1 1 340px;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .actions strong {
+      color: var(--ink);
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--dropbox);
+      color: #fff;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform .15s ease, background .15s ease;
+    }
+
+    .button:hover {
+      background: #0055d4;
+      transform: translateY(-1px);
+    }
+
+    .button-secondary {
+      background: #eaf1fc;
+      color: var(--primary-dark);
+    }
+
+    .button-secondary:hover {
+      background: #dce9fc;
+    }
+
+    .note {
+      margin: 16px 4px 0;
+      color: var(--muted);
+      font-size: .88rem;
+      text-align: center;
+    }
+
+    .note strong {
+      color: var(--success);
+    }
+
+    @media (max-width: 800px) {
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      iframe {
+        min-height: 760px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .shell {
+        width: min(100% - 18px, 1180px);
+        margin: 10px auto 24px;
+      }
+
+      .hero,
+      .instructions,
+      .questionnaire {
+        border-radius: 16px;
+      }
+
+      .actions {
+        bottom: 6px;
+      }
+
+      .button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <p class="eyebrow">Preuve de concept</p>
+      <h1>Essai du circuit de remise automatisée</h1>
+      <p>
+        Complétez le questionnaire C# déjà créé, exportez ses réponses au format JSON,
+        puis remettez ce fichier dans le dossier Dropbox prévu pour cet essai.
+      </p>
+    </header>
+
+    <section class="instructions" aria-labelledby="steps-title">
+      <h2 id="steps-title">Parcours de test</h2>
+      <ol class="steps">
+        <li>
+          <span class="step-number">1</span>
+          <strong>Répondre</strong>
+          <span>Commencez l’interrogation ci-dessous et allez jusqu’à la validation définitive.</span>
+        </li>
+        <li>
+          <span class="step-number">2</span>
+          <strong>Télécharger</strong>
+          <span>Cliquez sur « Exporter les réponses en JSON » et conservez le fichier téléchargé.</span>
+        </li>
+        <li>
+          <span class="step-number">3</span>
+          <strong>Remettre</strong>
+          <span>Utilisez le bouton Dropbox et sélectionnez le fichier JSON qui vient d’être téléchargé.</span>
+        </li>
+      </ol>
+    </section>
+
+    <section class="questionnaire" aria-labelledby="questionnaire-title">
+      <div class="questionnaire-header">
+        <div>
+          <h2 id="questionnaire-title">Questionnaire C# — variables, types et conditions</h2>
+          <p>Le questionnaire original est intégré ci-dessous.</p>
+        </div>
+        <a class="button button-secondary" href="https://fullcycle.github.io/questionnaires/" target="_blank" rel="noopener">
+          Ouvrir en plein écran
+        </a>
+      </div>
+      <iframe
+        title="Questionnaire interactif C#"
+        src="https://fullcycle.github.io/questionnaires/"
+        loading="eager"
+        allow="clipboard-write"
+      ></iframe>
+    </section>
+
+    <section class="actions" aria-label="Remise des réponses">
+      <p>
+        <strong>Questionnaire terminé et JSON téléchargé ?</strong><br>
+        Le bouton ouvre la demande de fichiers associée au dossier Dropbox de cet essai.
+      </p>
+      <a
+        class="button"
+        href="https://www.dropbox.com/request/i9fa9oecf4qxh6zoe6q0"
+        target="_blank"
+        rel="noopener"
+      >
+        Remettre le JSON sur Dropbox
+      </a>
+    </section>
+
+    <p class="note">
+      La remise est terminée uniquement lorsque Dropbox affiche sa confirmation.
+      Le fichier sera classé dans <strong>questionnairesSectionInfo / Essais questionnaire automatisé</strong>.
+    </p>
+  </main>
+</body>
+</html>
