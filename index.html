@@ -937,9 +937,25 @@ html&gt;body{padding:0}&lt;/style&gt;
       border-left: 3px solid var(--destructive);
       background: var(--muted);
     }
+    #csharp-quiz-app .flagged-review-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .75rem;
+      padding: .8rem;
+      border-left: 3px solid var(--viz-series-2);
+      background: var(--muted);
+    }
+    #csharp-quiz-app .flagged-review-box p {
+      margin: 0;
+    }
     #csharp-quiz-app .review-item {
       padding-bottom: .9rem;
       border-bottom: 1px solid var(--border);
+    }
+    #csharp-quiz-app .review-item.is-flagged {
+      padding-left: .75rem;
+      border-left: 3px solid var(--viz-series-2);
     }
     #csharp-quiz-app .review-item:last-child {
       padding-bottom: 0;
@@ -986,8 +1002,14 @@ html&gt;body{padding:0}&lt;/style&gt;
       }
       #csharp-quiz-app .footer-actions,
       #csharp-quiz-app .footer-group,
-      #csharp-quiz-app .footer-group .btn {
+      #csharp-quiz-app .footer-group .btn,
+      #csharp-quiz-app .flagged-review-box,
+      #csharp-quiz-app .flagged-review-box .btn {
         width: 100%;
+      }
+      #csharp-quiz-app .flagged-review-box {
+        align-items: stretch;
+        flex-direction: column;
       }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -1028,8 +1050,8 @@ html&gt;body{padding:0}&lt;/style&gt;
             &lt;span class=&quot;viz-stat-value&quot;&gt;8&lt;/span&gt;
           &lt;/div&gt;
           &lt;div class=&quot;card viz-stat&quot;&gt;
-            &lt;span class=&quot;text-muted&quot;&gt;Durée conseillée&lt;/span&gt;
-            &lt;span class=&quot;viz-stat-value&quot;&gt;25 min&lt;/span&gt;
+            &lt;span class=&quot;text-muted&quot;&gt;Temps maximal&lt;/span&gt;
+            &lt;span id=&quot;start-duration&quot; class=&quot;viz-stat-value&quot;&gt;25 min&lt;/span&gt;
           &lt;/div&gt;
           &lt;div class=&quot;card viz-stat&quot;&gt;
             &lt;span class=&quot;text-muted&quot;&gt;Total&lt;/span&gt;
@@ -1044,7 +1066,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         &lt;input class=&quot;form-control&quot; id=&quot;student-name&quot; name=&quot;studentName&quot; type=&quot;text&quot; autocomplete=&quot;name&quot; maxlength=&quot;80&quot; required placeholder=&quot;Ex. Alex Martin&quot;&gt;
         &lt;label class=&quot;form-label&quot; for=&quot;student-class&quot;&gt;Classe ou groupe&lt;/label&gt;
         &lt;input class=&quot;form-control&quot; id=&quot;student-class&quot; name=&quot;studentClass&quot; type=&quot;text&quot; maxlength=&quot;40&quot; placeholder=&quot;Ex. 4TQ INFO&quot;&gt;
-        &lt;p class=&quot;text-muted text-small&quot;&gt;Le compte à rebours de 25 minutes démarrera automatiquement.&lt;/p&gt;
+        &lt;p id=&quot;start-timer-message&quot; class=&quot;text-muted text-small&quot;&gt;Le compte à rebours de 25 minutes démarrera automatiquement. À 00:00, la copie sera envoyée et le test sera terminé.&lt;/p&gt;
         &lt;p id=&quot;start-error&quot; class=&quot;text-destructive text-small hidden&quot; role=&quot;alert&quot;&gt;Indique ton nom et ton prénom avant de commencer.&lt;/p&gt;
         &lt;button id=&quot;start-button&quot; class=&quot;btn btn-primary btn-block&quot; type=&quot;button&quot;&gt;Commencer l’interrogation&lt;/button&gt;
       &lt;/form&gt;
@@ -1108,6 +1130,10 @@ html&gt;body{padding:0}&lt;/style&gt;
           &lt;span id=&quot;review-count&quot; class=&quot;viz-badge&quot;&gt;&lt;/span&gt;
         &lt;/div&gt;
         &lt;div id=&quot;validation-message&quot; class=&quot;validation-box hidden&quot; role=&quot;alert&quot;&gt;&lt;/div&gt;
+        &lt;div id=&quot;flagged-review-box&quot; class=&quot;flagged-review-box hidden&quot;&gt;
+          &lt;p id=&quot;flagged-review-summary&quot; class=&quot;text-small&quot;&gt;&lt;/p&gt;
+          &lt;button id=&quot;review-flagged&quot; class=&quot;btn&quot; type=&quot;button&quot;&gt;Revoir les questions marquées&lt;/button&gt;
+        &lt;/div&gt;
         &lt;div id=&quot;review-list&quot; class=&quot;review-list&quot;&gt;&lt;/div&gt;
         &lt;div class=&quot;footer-actions&quot;&gt;
           &lt;button id=&quot;back-to-quiz&quot; class=&quot;btn&quot; type=&quot;button&quot;&gt;Revenir aux questions&lt;/button&gt;
@@ -1242,11 +1268,14 @@ html&gt;body{padding:0}&lt;/style&gt;
         answers: {},
         flagged: {},
         timerHandle: null,
-        finalPayload: null
+        finalPayload: null,
+        submissionReason: null
       };
 
       const $ = (selector) =&gt; root.querySelector(selector);
       const screens = [&#x27;start&#x27;, &#x27;quiz&#x27;, &#x27;review&#x27;, &#x27;result&#x27;];
+      $(&#x27;#start-duration&#x27;).textContent = EXAM.durationMinutes + &#x27; min&#x27;;
+      $(&#x27;#start-timer-message&#x27;).textContent = &#x27;Le compte à rebours de &#x27; + EXAM.durationMinutes + &#x27; minutes démarrera automatiquement. À 00:00, la copie sera envoyée et le test sera terminé.&#x27;;
 
       function showScreen(name) {
         screens.forEach((screen) =&gt; {
@@ -1311,7 +1340,7 @@ html&gt;body{padding:0}&lt;/style&gt;
           if (isAnswered(question)) button.classList.add(&#x27;is-answered&#x27;);
           if (state.flagged[question.id]) button.classList.add(&#x27;is-flagged&#x27;);
           button.textContent = String(index + 1);
-          button.setAttribute(&#x27;aria-label&#x27;, &#x27;Question &#x27; + (index + 1) + (isAnswered(question) ? &#x27;, répondue&#x27; : &#x27;, sans réponse&#x27;));
+          button.setAttribute(&#x27;aria-label&#x27;, &#x27;Question &#x27; + (index + 1) + (isAnswered(question) ? &#x27;, répondue&#x27; : &#x27;, sans réponse&#x27;) + (state.flagged[question.id] ? &#x27;, marquée à revoir&#x27; : &#x27;&#x27;));
           button.addEventListener(&#x27;click&#x27;, () =&gt; goToQuestion(index));
           nav.appendChild(button);
         });
@@ -1436,13 +1465,25 @@ html&gt;body{padding:0}&lt;/style&gt;
       function renderReview() {
         const count = answeredCount();
         $(&#x27;#review-count&#x27;).textContent = count + &#x27;/&#x27; + EXAM.questions.length + &#x27; répondues&#x27;;
+        const flaggedIndexes = EXAM.questions
+          .map((question, index) =&gt; state.flagged[question.id] ? index : -1)
+          .filter((index) =&gt; index &gt;= 0);
+        const flaggedBox = $(&#x27;#flagged-review-box&#x27;);
+        flaggedBox.classList.toggle(&#x27;hidden&#x27;, flaggedIndexes.length === 0);
+        $(&#x27;#flagged-review-summary&#x27;).textContent = flaggedIndexes.length
+          ? flaggedIndexes.length + &#x27; question&#x27; + (flaggedIndexes.length &gt; 1 ? &#x27;s sont marquées&#x27; : &#x27; est marquée&#x27;) + &#x27; pour une dernière vérification.&#x27;
+          : &#x27;&#x27;;
+        $(&#x27;#review-flagged&#x27;).textContent = flaggedIndexes.length &gt; 1
+          ? &#x27;Revoir les &#x27; + flaggedIndexes.length + &#x27; questions marquées&#x27;
+          : &#x27;Revoir la question marquée&#x27;;
         const list = $(&#x27;#review-list&#x27;);
         list.innerHTML = &#x27;&#x27;;
         EXAM.questions.forEach((question, index) =&gt; {
           const item = document.createElement(&#x27;div&#x27;);
           item.className = &#x27;review-item&#x27;;
+          if (state.flagged[question.id]) item.classList.add(&#x27;is-flagged&#x27;);
           const title = document.createElement(&#x27;strong&#x27;);
-          title.textContent = (index + 1) + &#x27;. &#x27; + question.title + &#x27; — &#x27; + question.points + &#x27; pt&#x27; + (question.points &gt; 1 ? &#x27;s&#x27; : &#x27;&#x27;);
+          title.textContent = (index + 1) + &#x27;. &#x27; + question.title + &#x27; — &#x27; + question.points + &#x27; pt&#x27; + (question.points &gt; 1 ? &#x27;s&#x27; : &#x27;&#x27;) + (state.flagged[question.id] ? &#x27; · À revoir&#x27; : &#x27;&#x27;);
           const preview = document.createElement(&#x27;p&#x27;);
           preview.className = &#x27;answer-preview text-small&#x27;;
           preview.textContent = answerSummary(question);
@@ -1481,10 +1522,8 @@ html&gt;body{padding:0}&lt;/style&gt;
         $(&#x27;#timer-value&#x27;).classList.toggle(&#x27;is-low&#x27;, remaining &lt;= 300);
         if (remaining === 0) {
           clearInterval(state.timerHandle);
-          renderReview();
-          $(&#x27;#validation-message&#x27;).classList.remove(&#x27;hidden&#x27;);
-          $(&#x27;#validation-message&#x27;).textContent = &#x27;Le temps conseillé est écoulé. Complète les réponses manquantes si ton professeur l’autorise, puis valide.&#x27;;
-          announce(&#x27;Le temps conseillé est écoulé.&#x27;);
+          announce(&#x27;Temps écoulé. Le test est terminé et la copie est envoyée automatiquement.&#x27;);
+          finalizeExam(true);
         }
       }
 
@@ -1499,7 +1538,8 @@ html&gt;body{padding:0}&lt;/style&gt;
       }
 
       function createPayload() {
-        const durationSeconds = Math.max(0, Math.round((state.submittedAt - state.startedAt) / 1000));
+        const maximumSeconds = EXAM.durationMinutes * 60;
+        const durationSeconds = Math.min(maximumSeconds, Math.max(0, Math.round((state.submittedAt - state.startedAt) / 1000)));
         return {
           format: &#x27;interro-csharp-reponses&#x27;,
           schemaVersion: 1,
@@ -1518,7 +1558,9 @@ html&gt;body{padding:0}&lt;/style&gt;
             debut: new Date(state.startedAt).toISOString(),
             fin: new Date(state.submittedAt).toISOString(),
             dureeSecondes: durationSeconds,
-            chronometreActive: state.timerEnabled
+            dureeMaximaleSecondes: maximumSeconds,
+            chronometreActive: state.timerEnabled,
+            motifFin: state.submissionReason
           },
           correction: {
             statut: &#x27;a_corriger&#x27;,
@@ -1542,25 +1584,37 @@ html&gt;body{padding:0}&lt;/style&gt;
         };
       }
 
-      function finalizeExam() {
+      function finalizeExam(forceAutomatic = false) {
+        if (state.submittedAt) return;
+        const timeExpired = forceAutomatic || (state.deadline &amp;&amp; Date.now() &gt;= state.deadline);
         const missing = missingQuestions();
-        if (missing.length) {
+        if (missing.length &amp;&amp; !timeExpired) {
           renderReview();
           $(&#x27;#validation-message&#x27;).classList.remove(&#x27;hidden&#x27;);
           $(&#x27;#validation-message&#x27;).textContent = &#x27;Validation impossible : réponds aux &#x27; + missing.length + &#x27; question&#x27; + (missing.length &gt; 1 ? &#x27;s obligatoires&#x27; : &#x27; obligatoire&#x27;) + &#x27; restante&#x27; + (missing.length &gt; 1 ? &#x27;s&#x27; : &#x27;&#x27;) + &#x27;.&#x27;;
           return;
         }
-        state.submittedAt = Date.now();
+        state.submissionReason = timeExpired ? &#x27;temps_ecoule&#x27; : &#x27;validation_eleve&#x27;;
+        state.submittedAt = timeExpired ? state.deadline : Date.now();
         clearInterval(state.timerHandle);
         state.finalPayload = createPayload();
         const seconds = Math.round((state.submittedAt - state.startedAt) / 1000);
         $(&#x27;#result-student&#x27;).textContent = state.studentName;
         $(&#x27;#result-answered&#x27;).textContent = answeredCount() + &#x27;/&#x27; + EXAM.questions.length;
         $(&#x27;#result-duration&#x27;).textContent = formatDuration(seconds);
-        $(&#x27;#result-message&#x27;).textContent = &#x27;Merci &#x27; + state.studentName + &#x27;. Tes réponses sont prêtes à être envoyées.&#x27;;
+        $(&#x27;#result-title&#x27;).textContent = timeExpired ? &#x27;Temps écoulé — remise automatique&#x27; : &#x27;Réponses prêtes à être remises&#x27;;
+        $(&#x27;#result-message&#x27;).textContent = timeExpired
+          ? &#x27;Le temps maximal est écoulé. Le test est terminé et la copie est envoyée automatiquement.&#x27;
+          : &#x27;Merci &#x27; + state.studentName + &#x27;. Tes réponses sont prêtes à être envoyées.&#x27;;
         $(&#x27;#header-status&#x27;).textContent = &#x27;Terminée&#x27;;
         showScreen(&#x27;result&#x27;);
-        announce(&#x27;Interrogation validée. Les réponses sont prêtes à être envoyées.&#x27;);
+        if (timeExpired) {
+          $(&#x27;#send-answers&#x27;).textContent = &#x27;Envoi automatique…&#x27;;
+          announce(&#x27;Temps écoulé. Envoi automatique de la copie.&#x27;);
+          sendAnswers();
+        } else {
+          announce(&#x27;Interrogation validée. Les réponses sont prêtes à être envoyées.&#x27;);
+        }
       }
 
       async function sendAnswers() {
@@ -1586,7 +1640,9 @@ html&gt;body{padding:0}&lt;/style&gt;
           button.dataset.sent = &#x27;true&#x27;;
           button.textContent = &#x27;Réponses envoyées&#x27;;
           status.textContent = &#x27;Ta copie a bien été remise. Tu peux fermer cette page.&#x27;;
-          $(&#x27;#result-message&#x27;).textContent = &#x27;Merci &#x27; + state.studentName + &#x27;. Ta copie a bien été remise.&#x27;;
+          $(&#x27;#result-message&#x27;).textContent = state.submissionReason === &#x27;temps_ecoule&#x27;
+            ? &#x27;Le temps maximal est écoulé. Ta copie a bien été remise automatiquement.&#x27;
+            : &#x27;Merci &#x27; + state.studentName + &#x27;. Ta copie a bien été remise.&#x27;;
           announce(&#x27;Réponses envoyées avec succès.&#x27;);
         } catch (error) {
           button.disabled = false;
@@ -1626,7 +1682,11 @@ html&gt;body{padding:0}&lt;/style&gt;
       $(&#x27;#finish-button&#x27;).addEventListener(&#x27;click&#x27;, renderReview);
       $(&#x27;#review-button&#x27;).addEventListener(&#x27;click&#x27;, renderReview);
       $(&#x27;#back-to-quiz&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; goToQuestion(state.current));
-      $(&#x27;#submit-exam&#x27;).addEventListener(&#x27;click&#x27;, finalizeExam);
+      $(&#x27;#review-flagged&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+        const firstFlagged = EXAM.questions.findIndex((question) =&gt; state.flagged[question.id]);
+        if (firstFlagged &gt;= 0) goToQuestion(firstFlagged);
+      });
+      $(&#x27;#submit-exam&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; finalizeExam(false));
       $(&#x27;#flag-question&#x27;).addEventListener(&#x27;change&#x27;, (event) =&gt; {
         const question = EXAM.questions[state.current];
         state.flagged[question.id] = event.target.checked;
