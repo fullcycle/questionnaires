@@ -1,0 +1,1896 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Interrogation interactive C#</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;max-width:736px;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts allow-downloads" referrerpolicy="no-referrer" title="Interrogation interactive C#" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Interrogation interactive C#&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(--background) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: light-dark(rgb(255 255 255), rgb(24 24 24));
+  --foreground: light-dark(rgb(26 28 31), rgb(255 255 255));
+  --card: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --card-foreground: var(--foreground);
+  --popover: light-dark(rgb(255 255 255), rgb(45 45 45));
+  --popover-foreground: var(--foreground);
+  --primary: light-dark(rgb(51 156 255), rgb(131 195 255));
+  --primary-foreground: light-dark(rgb(255 255 255), rgb(13 13 13));
+  --secondary: light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: light-dark(
+    rgb(26 28 31 / 49.4%),
+    rgb(255 255 255 / 49.8%)
+  );
+  --accent: light-dark(rgb(229 242 255), rgb(13 39 63));
+  --accent-foreground: var(--primary);
+  --destructive: light-dark(rgb(226 85 7), rgb(255 133 73));
+  --border: light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%));
+  --input: light-dark(
+    rgb(26 28 31 / 11.8%),
+    color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+  );
+  --ring: light-dark(rgb(51 156 255), rgb(131 195 255 / 76%));
+  --font-size-base: 14px;
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: 12.5px;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+  --color-background-primary: var(--background);
+  --color-text-primary: var(--foreground);
+  --color-border-secondary: var(--border);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--viz-font-weight-medium);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed=&quot;true&quot;],
+    [aria-selected=&quot;true&quot;],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;csharp-quiz-app&quot;&gt;
+  &lt;style&gt;
+    #csharp-quiz-app {
+      color: var(--foreground);
+    }
+    #csharp-quiz-app * {
+      box-sizing: border-box;
+    }
+    #csharp-quiz-app .app-shell {
+      display: grid;
+      gap: 1rem;
+    }
+    #csharp-quiz-app .brand-row,
+    #csharp-quiz-app .question-heading,
+    #csharp-quiz-app .footer-actions,
+    #csharp-quiz-app .timer-line,
+    #csharp-quiz-app .summary-line {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      flex-wrap: wrap;
+    }
+    #csharp-quiz-app .brand-row {
+      justify-content: space-between;
+    }
+    #csharp-quiz-app .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+    }
+    #csharp-quiz-app .brand-icon {
+      display: grid;
+      place-items: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: .75rem;
+      background: var(--primary);
+      color: var(--primary-foreground);
+      font-weight: 500;
+    }
+    #csharp-quiz-app .eyebrow {
+      margin: 0;
+      color: var(--muted-foreground);
+    }
+    #csharp-quiz-app .brand-title {
+      margin: .1rem 0 0;
+    }
+    #csharp-quiz-app .intro-grid,
+    #csharp-quiz-app .quiz-layout,
+    #csharp-quiz-app .result-grid {
+      display: grid;
+      gap: 1rem;
+    }
+    #csharp-quiz-app .intro-grid {
+      grid-template-columns: minmax(0, 1.45fr) minmax(14rem, .75fr);
+      align-items: start;
+    }
+    #csharp-quiz-app .quiz-layout {
+      grid-template-columns: 12rem minmax(0, 1fr);
+      align-items: start;
+    }
+    #csharp-quiz-app .result-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    #csharp-quiz-app .section-stack,
+    #csharp-quiz-app .question-card,
+    #csharp-quiz-app .sidebar,
+    #csharp-quiz-app .review-list {
+      display: grid;
+      gap: 1rem;
+    }
+    #csharp-quiz-app .section-stack h2,
+    #csharp-quiz-app .section-stack h3,
+    #csharp-quiz-app .question-card h2 {
+      margin: 0;
+    }
+    #csharp-quiz-app .section-stack p,
+    #csharp-quiz-app .question-card p {
+      margin: 0;
+    }
+    #csharp-quiz-app .feature-list,
+    #csharp-quiz-app .instruction-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      display: grid;
+      gap: .5rem;
+    }
+    #csharp-quiz-app .progress-track {
+      height: .55rem;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--muted);
+    }
+    #csharp-quiz-app .progress-fill {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: var(--viz-series-1);
+      transition: width .25s ease;
+    }
+    #csharp-quiz-app .question-nav {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: .45rem;
+    }
+    #csharp-quiz-app .question-nav .btn {
+      padding-inline: .25rem;
+      min-width: 0;
+    }
+    #csharp-quiz-app .question-nav .is-answered::after {
+      content: &quot;✓&quot;;
+      margin-left: .2rem;
+    }
+    #csharp-quiz-app .question-nav .is-flagged::before {
+      content: &quot;•&quot;;
+      margin-right: .15rem;
+      color: var(--viz-series-2);
+    }
+    #csharp-quiz-app .question-heading {
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    #csharp-quiz-app .question-number {
+      color: var(--muted-foreground);
+      margin-bottom: .25rem;
+    }
+    #csharp-quiz-app .points {
+      white-space: nowrap;
+    }
+    #csharp-quiz-app .answer-area {
+      display: grid;
+      gap: .75rem;
+    }
+    #csharp-quiz-app .choice-list {
+      display: grid;
+      gap: .55rem;
+    }
+    #csharp-quiz-app .choice-row {
+      display: flex;
+      gap: .65rem;
+      align-items: flex-start;
+      padding: .75rem;
+      border-radius: .65rem;
+      background: var(--muted);
+      color: var(--foreground);
+    }
+    #csharp-quiz-app .choice-row input {
+      margin-top: .2rem;
+    }
+    #csharp-quiz-app pre {
+      margin: 0;
+      padding: 1rem;
+      overflow-x: auto;
+      border-radius: .65rem;
+      background: var(--muted);
+      color: var(--foreground);
+    }
+    #csharp-quiz-app textarea.form-control {
+      min-height: 9rem;
+      resize: vertical;
+    }
+    #csharp-quiz-app .short-answer {
+      max-width: 30rem;
+    }
+    #csharp-quiz-app .footer-actions {
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+    #csharp-quiz-app .footer-group {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+    }
+    #csharp-quiz-app .timer-line {
+      justify-content: space-between;
+    }
+    #csharp-quiz-app .timer-value {
+      font-variant-numeric: tabular-nums;
+      font-weight: 500;
+    }
+    #csharp-quiz-app .timer-value.is-low {
+      color: var(--destructive);
+    }
+    #csharp-quiz-app .validation-box {
+      padding: .8rem;
+      border-left: 3px solid var(--destructive);
+      background: var(--muted);
+    }
+    #csharp-quiz-app .review-item {
+      padding-bottom: .9rem;
+      border-bottom: 1px solid var(--border);
+    }
+    #csharp-quiz-app .review-item:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+    #csharp-quiz-app .review-item p {
+      margin: .2rem 0 0;
+    }
+    #csharp-quiz-app .answer-preview {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      color: var(--muted-foreground);
+    }
+    #csharp-quiz-app .hidden {
+      display: none !important;
+    }
+    #csharp-quiz-app .sr-status {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    @media (max-width: 650px) {
+      #csharp-quiz-app .intro-grid,
+      #csharp-quiz-app .quiz-layout,
+      #csharp-quiz-app .result-grid {
+        grid-template-columns: 1fr;
+      }
+      #csharp-quiz-app .sidebar {
+        order: 2;
+      }
+      #csharp-quiz-app .question-nav {
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 420px) {
+      #csharp-quiz-app .question-nav {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+      #csharp-quiz-app .footer-actions,
+      #csharp-quiz-app .footer-group,
+      #csharp-quiz-app .footer-group .btn {
+        width: 100%;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #csharp-quiz-app .progress-fill {
+        transition: none;
+      }
+    }
+  &lt;/style&gt;
+
+  &lt;main class=&quot;app-shell&quot; aria-labelledby=&quot;app-title&quot;&gt;
+    &lt;header class=&quot;brand-row&quot;&gt;
+      &lt;div class=&quot;brand-mark&quot;&gt;
+        &lt;div class=&quot;brand-icon&quot; aria-hidden=&quot;true&quot;&gt;C#&lt;/div&gt;
+        &lt;div&gt;
+          &lt;p class=&quot;eyebrow text-small&quot;&gt;Modèle personnalisable · Niveau débutant&lt;/p&gt;
+          &lt;h1 id=&quot;app-title&quot; class=&quot;brand-title&quot;&gt;Interrogation de C#&lt;/h1&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;span class=&quot;viz-badge&quot; id=&quot;header-status&quot;&gt;Non commencée&lt;/span&gt;
+    &lt;/header&gt;
+
+    &lt;section id=&quot;screen-start&quot; class=&quot;intro-grid&quot; aria-labelledby=&quot;start-title&quot;&gt;
+      &lt;div class=&quot;section-stack&quot;&gt;
+        &lt;div&gt;
+          &lt;p class=&quot;eyebrow text-small&quot;&gt;Chapitre modèle&lt;/p&gt;
+          &lt;h2 id=&quot;start-title&quot;&gt;Variables, types et conditions&lt;/h2&gt;
+        &lt;/div&gt;
+        &lt;p&gt;Cette interrogation comporte &lt;strong&gt;8 questions&lt;/strong&gt; pour un total de &lt;strong&gt;20 points&lt;/strong&gt;. Les réponses ne sont pas corrigées automatiquement : elles seront exportées pour une correction pédagogique ultérieure.&lt;/p&gt;
+        &lt;ul class=&quot;feature-list&quot;&gt;
+          &lt;li&gt;QCM, vrai/faux et phrase à compléter&lt;/li&gt;
+          &lt;li&gt;Définition reformulée avec ses propres mots&lt;/li&gt;
+          &lt;li&gt;Lecture, analyse et correction de code&lt;/li&gt;
+          &lt;li&gt;Petit exercice de programmation&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;div class=&quot;viz-grid&quot;&gt;
+          &lt;div class=&quot;card viz-stat&quot;&gt;
+            &lt;span class=&quot;text-muted&quot;&gt;Questions&lt;/span&gt;
+            &lt;span class=&quot;viz-stat-value&quot;&gt;8&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;card viz-stat&quot;&gt;
+            &lt;span class=&quot;text-muted&quot;&gt;Durée conseillée&lt;/span&gt;
+            &lt;span class=&quot;viz-stat-value&quot;&gt;25 min&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;card viz-stat&quot;&gt;
+            &lt;span class=&quot;text-muted&quot;&gt;Total&lt;/span&gt;
+            &lt;span class=&quot;viz-stat-value&quot;&gt;20 pts&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;form id=&quot;start-form&quot; class=&quot;card section-stack&quot; novalidate&gt;
+        &lt;h2&gt;Identification&lt;/h2&gt;
+        &lt;label class=&quot;form-label&quot; for=&quot;student-name&quot;&gt;Nom et prénom&lt;/label&gt;
+        &lt;input class=&quot;form-control&quot; id=&quot;student-name&quot; name=&quot;studentName&quot; type=&quot;text&quot; autocomplete=&quot;name&quot; maxlength=&quot;80&quot; required placeholder=&quot;Ex. Alex Martin&quot;&gt;
+        &lt;label class=&quot;form-label&quot; for=&quot;student-class&quot;&gt;Classe ou groupe&lt;/label&gt;
+        &lt;input class=&quot;form-control&quot; id=&quot;student-class&quot; name=&quot;studentClass&quot; type=&quot;text&quot; maxlength=&quot;40&quot; placeholder=&quot;Ex. 4TQ INFO&quot;&gt;
+        &lt;div class=&quot;form-check form-switch&quot;&gt;
+          &lt;input class=&quot;form-check-input&quot; id=&quot;timer-enabled&quot; type=&quot;checkbox&quot; checked&gt;
+          &lt;label class=&quot;form-check-label&quot; for=&quot;timer-enabled&quot;&gt;Activer le compte à rebours de 25 minutes&lt;/label&gt;
+        &lt;/div&gt;
+        &lt;p id=&quot;start-error&quot; class=&quot;text-destructive text-small hidden&quot; role=&quot;alert&quot;&gt;Indique ton nom et ton prénom avant de commencer.&lt;/p&gt;
+        &lt;button class=&quot;btn btn-primary btn-block&quot; type=&quot;submit&quot;&gt;Commencer l’interrogation&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/section&gt;
+
+    &lt;section id=&quot;screen-quiz&quot; class=&quot;hidden&quot; aria-labelledby=&quot;question-title&quot;&gt;
+      &lt;div class=&quot;timer-line card&quot; aria-label=&quot;Avancement de l’interrogation&quot;&gt;
+        &lt;div&gt;
+          &lt;span class=&quot;text-muted text-small&quot;&gt;Progression&lt;/span&gt;
+          &lt;div&gt;&lt;strong id=&quot;progress-label&quot;&gt;0 sur 8 répondues&lt;/strong&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;timer-wrap&quot;&gt;
+          &lt;span class=&quot;text-muted text-small&quot;&gt;Temps restant&lt;/span&gt;
+          &lt;div id=&quot;timer-value&quot; class=&quot;timer-value&quot; aria-live=&quot;off&quot;&gt;25:00&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;progress-track&quot; aria-hidden=&quot;true&quot;&gt;&lt;div id=&quot;progress-fill&quot; class=&quot;progress-fill&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+
+      &lt;div class=&quot;quiz-layout&quot;&gt;
+        &lt;aside class=&quot;sidebar&quot; aria-label=&quot;Navigation entre les questions&quot;&gt;
+          &lt;div&gt;
+            &lt;p class=&quot;text-muted text-small&quot;&gt;Questions&lt;/p&gt;
+            &lt;div id=&quot;question-nav&quot; class=&quot;question-nav&quot;&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;text-small text-muted&quot;&gt;✓ répondue · • à revoir&lt;/div&gt;
+          &lt;button id=&quot;review-button&quot; class=&quot;btn&quot; type=&quot;button&quot;&gt;Voir le récapitulatif&lt;/button&gt;
+        &lt;/aside&gt;
+
+        &lt;article class=&quot;card question-card&quot;&gt;
+          &lt;div class=&quot;question-heading&quot;&gt;
+            &lt;div&gt;
+              &lt;div id=&quot;question-number&quot; class=&quot;question-number text-small&quot;&gt;&lt;/div&gt;
+              &lt;h2 id=&quot;question-title&quot;&gt;&lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;span id=&quot;question-points&quot; class=&quot;viz-badge points&quot;&gt;&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;div id=&quot;question-body&quot;&gt;&lt;/div&gt;
+          &lt;div id=&quot;answer-area&quot; class=&quot;answer-area&quot;&gt;&lt;/div&gt;
+          &lt;label class=&quot;form-check&quot; for=&quot;flag-question&quot;&gt;
+            &lt;input class=&quot;form-check-input&quot; id=&quot;flag-question&quot; type=&quot;checkbox&quot;&gt;
+            &lt;span class=&quot;form-check-label&quot;&gt;Marquer cette question pour y revenir&lt;/span&gt;
+          &lt;/label&gt;
+          &lt;div class=&quot;footer-actions&quot;&gt;
+            &lt;div class=&quot;footer-group&quot;&gt;
+              &lt;button id=&quot;prev-button&quot; class=&quot;btn&quot; type=&quot;button&quot;&gt;Précédente&lt;/button&gt;
+              &lt;button id=&quot;next-button&quot; class=&quot;btn btn-primary&quot; type=&quot;button&quot;&gt;Suivante&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;button id=&quot;finish-button&quot; class=&quot;btn&quot; type=&quot;button&quot;&gt;Terminer&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/article&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;section id=&quot;screen-review&quot; class=&quot;hidden section-stack&quot; aria-labelledby=&quot;review-title&quot;&gt;
+      &lt;div class=&quot;card section-stack&quot;&gt;
+        &lt;div class=&quot;summary-line&quot;&gt;
+          &lt;div&gt;
+            &lt;p class=&quot;eyebrow text-small&quot;&gt;Avant l’envoi&lt;/p&gt;
+            &lt;h2 id=&quot;review-title&quot;&gt;Vérifie tes réponses&lt;/h2&gt;
+          &lt;/div&gt;
+          &lt;span id=&quot;review-count&quot; class=&quot;viz-badge&quot;&gt;&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;validation-message&quot; class=&quot;validation-box hidden&quot; role=&quot;alert&quot;&gt;&lt;/div&gt;
+        &lt;div id=&quot;review-list&quot; class=&quot;review-list&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;footer-actions&quot;&gt;
+          &lt;button id=&quot;back-to-quiz&quot; class=&quot;btn&quot; type=&quot;button&quot;&gt;Revenir aux questions&lt;/button&gt;
+          &lt;button id=&quot;submit-exam&quot; class=&quot;btn btn-primary&quot; type=&quot;button&quot;&gt;Valider définitivement&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;section id=&quot;screen-result&quot; class=&quot;hidden section-stack&quot; aria-labelledby=&quot;result-title&quot;&gt;
+      &lt;div class=&quot;section-stack&quot;&gt;
+        &lt;div&gt;
+          &lt;p class=&quot;eyebrow text-small&quot;&gt;Interrogation terminée&lt;/p&gt;
+          &lt;h2 id=&quot;result-title&quot;&gt;Réponses prêtes à être remises&lt;/h2&gt;
+        &lt;/div&gt;
+        &lt;p id=&quot;result-message&quot;&gt;&lt;/p&gt;
+        &lt;div class=&quot;result-grid&quot;&gt;
+          &lt;div class=&quot;card viz-stat&quot;&gt;
+            &lt;span class=&quot;text-muted&quot;&gt;Élève&lt;/span&gt;
+            &lt;span id=&quot;result-student&quot; class=&quot;viz-stat-value&quot;&gt;&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;card viz-stat&quot;&gt;
+            &lt;span class=&quot;text-muted&quot;&gt;Réponses&lt;/span&gt;
+            &lt;span id=&quot;result-answered&quot; class=&quot;viz-stat-value&quot;&gt;&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;card viz-stat&quot;&gt;
+            &lt;span class=&quot;text-muted&quot;&gt;Durée&lt;/span&gt;
+            &lt;span id=&quot;result-duration&quot; class=&quot;viz-stat-value&quot;&gt;&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;p class=&quot;text-muted text-small&quot;&gt;Le fichier JSON contient l’identité, les dates, la durée, la version du questionnaire et toutes les réponses. Il ne contient aucun corrigé.&lt;/p&gt;
+        &lt;div class=&quot;viz-row&quot;&gt;
+          &lt;button id=&quot;export-json&quot; class=&quot;btn btn-primary&quot; type=&quot;button&quot;&gt;Exporter les réponses en JSON&lt;/button&gt;
+          &lt;button id=&quot;copy-json&quot; class=&quot;btn&quot; type=&quot;button&quot;&gt;Copier le JSON&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;p id=&quot;export-status&quot; class=&quot;text-small&quot; aria-live=&quot;polite&quot;&gt;&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+    &lt;div id=&quot;live-status&quot; class=&quot;sr-status&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+  &lt;/main&gt;
+
+  &lt;script&gt;
+    (() =&gt; {
+      const root = document.getElementById(&#x27;csharp-quiz-app&#x27;);
+      const EXAM = {
+        id: &#x27;csharp-debutant-variables-conditions&#x27;,
+        title: &#x27;Variables, types et conditions&#x27;,
+        version: &#x27;1.0&#x27;,
+        durationMinutes: 25,
+        questions: [
+          {
+            id: &#x27;q1-type-entier&#x27;,
+            type: &#x27;single_choice&#x27;,
+            title: &#x27;Choisir un type&#x27;,
+            prompt: &#x27;Quel type C# est le plus adapté pour stocker le nombre d’élèves présents dans une classe ?&#x27;,
+            points: 2,
+            required: true,
+            options: [&#x27;double&#x27;, &#x27;string&#x27;, &#x27;int&#x27;, &#x27;bool&#x27;]
+          },
+          {
+            id: &#x27;q2-variable&#x27;,
+            type: &#x27;definition&#x27;,
+            title: &#x27;Expliquer une notion&#x27;,
+            prompt: &#x27;Explique avec tes propres mots ce qu’est une variable en programmation.&#x27;,
+            hint: &#x27;Une ou deux phrases suffisent. Un exemple peut compléter ton explication.&#x27;,
+            points: 3,
+            required: true
+          },
+          {
+            id: &#x27;q3-declaration&#x27;,
+            type: &#x27;fill_blank&#x27;,
+            title: &#x27;Compléter une instruction&#x27;,
+            prompt: &#x27;Complète le mot manquant pour déclarer une variable entière appelée age.&#x27;,
+            codeBefore: &#x27;___ age = 15;&#x27;,
+            points: 2,
+            required: true
+          },
+          {
+            id: &#x27;q4-affectation&#x27;,
+            type: &#x27;true_false_justify&#x27;,
+            title: &#x27;Vrai ou faux, avec justification&#x27;,
+            prompt: &#x27;L’instruction suivante crée une variable appelée total et lui donne la valeur 12.&#x27;,
+            codeBefore: &#x27;int total = 12;&#x27;,
+            points: 3,
+            required: true
+          },
+          {
+            id: &#x27;q5-sortie&#x27;,
+            type: &#x27;short_text&#x27;,
+            title: &#x27;Prédire un affichage&#x27;,
+            prompt: &#x27;Qu’affiche ce programme ? Écris exactement le résultat attendu.&#x27;,
+            codeBefore: &#x27;int a = 4;\nint b = 3;\nConsole.WriteLine(a + b * 2);&#x27;,
+            points: 2,
+            required: true
+          },
+          {
+            id: &#x27;q6-erreur&#x27;,
+            type: &#x27;long_text&#x27;,
+            title: &#x27;Repérer et corriger une erreur&#x27;,
+            prompt: &#x27;Ce code provoque une erreur. Explique le problème et propose une correction.&#x27;,
+            codeBefore: &#x27;int age = &quot;16&quot;;\nConsole.WriteLine(age);&#x27;,
+            points: 3,
+            required: true
+          },
+          {
+            id: &#x27;q7-condition&#x27;,
+            type: &#x27;single_choice&#x27;,
+            title: &#x27;Comprendre une condition&#x27;,
+            prompt: &#x27;Quelle condition est vraie lorsque score vaut 10 ou plus ?&#x27;,
+            points: 2,
+            required: true,
+            options: [&#x27;score &gt; 10&#x27;, &#x27;score &gt;= 10&#x27;, &#x27;score = 10&#x27;, &#x27;score &lt;= 10&#x27;]
+          },
+          {
+            id: &#x27;q8-programme&#x27;,
+            type: &#x27;code&#x27;,
+            title: &#x27;Écrire un petit programme&#x27;,
+            prompt: &#x27;Écris un extrait C# qui déclare une variable temperature, puis affiche « Froid » si sa valeur est inférieure à 10 et « Doux » dans le cas contraire.&#x27;,
+            hint: &#x27;Plusieurs solutions correctes sont possibles. La syntaxe et la logique seront évaluées séparément.&#x27;,
+            points: 3,
+            required: true
+          }
+        ]
+      };
+
+      const state = {
+        current: 0,
+        studentName: &#x27;&#x27;,
+        studentClass: &#x27;&#x27;,
+        timerEnabled: true,
+        startedAt: null,
+        submittedAt: null,
+        deadline: null,
+        answers: {},
+        flagged: {},
+        timerHandle: null,
+        finalPayload: null
+      };
+
+      const $ = (selector) =&gt; root.querySelector(selector);
+      const screens = [&#x27;start&#x27;, &#x27;quiz&#x27;, &#x27;review&#x27;, &#x27;result&#x27;];
+
+      function showScreen(name) {
+        screens.forEach((screen) =&gt; {
+          $(&#x27;#screen-&#x27; + screen).classList.toggle(&#x27;hidden&#x27;, screen !== name);
+        });
+        window.scrollTo({ top: 0, behavior: &#x27;smooth&#x27; });
+      }
+
+      function announce(message) {
+        $(&#x27;#live-status&#x27;).textContent = message;
+      }
+
+      function totalPoints() {
+        return EXAM.questions.reduce((sum, q) =&gt; sum + q.points, 0);
+      }
+
+      function isAnswered(question) {
+        const value = state.answers[question.id];
+        if (question.type === &#x27;true_false_justify&#x27;) {
+          return Boolean(value &amp;&amp; value.choice &amp;&amp; value.justification &amp;&amp; value.justification.trim());
+        }
+        return typeof value === &#x27;string&#x27; ? Boolean(value.trim()) : Boolean(value);
+      }
+
+      function answeredCount() {
+        return EXAM.questions.filter(isAnswered).length;
+      }
+
+      function missingQuestions() {
+        return EXAM.questions.filter((q) =&gt; q.required &amp;&amp; !isAnswered(q));
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replaceAll(&#x27;&amp;&#x27;, &#x27;&amp;amp;&#x27;)
+          .replaceAll(&#x27;&lt;&#x27;, &#x27;&amp;lt;&#x27;)
+          .replaceAll(&#x27;&gt;&#x27;, &#x27;&amp;gt;&#x27;)
+          .replaceAll(&#x27;&quot;&#x27;, &#x27;&amp;quot;&#x27;)
+          .replaceAll(&quot;&#x27;&quot;, &#x27;&amp;#039;&#x27;);
+      }
+
+      function answerSummary(question) {
+        const answer = state.answers[question.id];
+        if (!isAnswered(question)) return &#x27;Aucune réponse&#x27;;
+        if (question.type === &#x27;true_false_justify&#x27;) {
+          return (answer.choice === &#x27;true&#x27; ? &#x27;Vrai&#x27; : &#x27;Faux&#x27;) + &#x27; — &#x27; + answer.justification;
+        }
+        return String(answer);
+      }
+
+      function renderNavigation() {
+        const nav = $(&#x27;#question-nav&#x27;);
+        nav.innerHTML = &#x27;&#x27;;
+        EXAM.questions.forEach((question, index) =&gt; {
+          const button = document.createElement(&#x27;button&#x27;);
+          button.type = &#x27;button&#x27;;
+          button.className = &#x27;btn&#x27;;
+          if (index === state.current) {
+            button.classList.add(&#x27;is-selected&#x27;);
+            button.setAttribute(&#x27;aria-current&#x27;, &#x27;step&#x27;);
+          }
+          if (isAnswered(question)) button.classList.add(&#x27;is-answered&#x27;);
+          if (state.flagged[question.id]) button.classList.add(&#x27;is-flagged&#x27;);
+          button.textContent = String(index + 1);
+          button.setAttribute(&#x27;aria-label&#x27;, &#x27;Question &#x27; + (index + 1) + (isAnswered(question) ? &#x27;, répondue&#x27; : &#x27;, sans réponse&#x27;));
+          button.addEventListener(&#x27;click&#x27;, () =&gt; goToQuestion(index));
+          nav.appendChild(button);
+        });
+      }
+
+      function renderQuestion() {
+        const question = EXAM.questions[state.current];
+        $(&#x27;#question-number&#x27;).textContent = &#x27;Question &#x27; + (state.current + 1) + &#x27; sur &#x27; + EXAM.questions.length;
+        $(&#x27;#question-title&#x27;).textContent = question.title;
+        $(&#x27;#question-points&#x27;).textContent = question.points + (question.points &gt; 1 ? &#x27; points&#x27; : &#x27; point&#x27;);
+        let body = &#x27;&lt;p&gt;&#x27; + escapeHtml(question.prompt) + &#x27;&lt;/p&gt;&#x27;;
+        if (question.codeBefore) body += &#x27;&lt;pre&gt;&lt;code&gt;&#x27; + escapeHtml(question.codeBefore) + &#x27;&lt;/code&gt;&lt;/pre&gt;&#x27;;
+        if (question.hint) body += &#x27;&lt;p class=&quot;text-muted text-small&quot;&gt;&#x27; + escapeHtml(question.hint) + &#x27;&lt;/p&gt;&#x27;;
+        $(&#x27;#question-body&#x27;).innerHTML = body;
+
+        const answerArea = $(&#x27;#answer-area&#x27;);
+        answerArea.innerHTML = &#x27;&#x27;;
+        const saved = state.answers[question.id];
+
+        if (question.type === &#x27;single_choice&#x27;) {
+          const list = document.createElement(&#x27;div&#x27;);
+          list.className = &#x27;choice-list&#x27;;
+          question.options.forEach((option, index) =&gt; {
+            const id = &#x27;choice-&#x27; + question.id + &#x27;-&#x27; + index;
+            const label = document.createElement(&#x27;label&#x27;);
+            label.className = &#x27;choice-row&#x27;;
+            label.htmlFor = id;
+            const input = document.createElement(&#x27;input&#x27;);
+            input.type = &#x27;radio&#x27;;
+            input.name = question.id;
+            input.id = id;
+            input.value = option;
+            input.checked = saved === option;
+            input.addEventListener(&#x27;change&#x27;, () =&gt; saveAnswer(question, input.value));
+            const span = document.createElement(&#x27;span&#x27;);
+            span.textContent = option;
+            label.append(input, span);
+            list.appendChild(label);
+          });
+          answerArea.appendChild(list);
+        } else if (question.type === &#x27;true_false_justify&#x27;) {
+          const choices = document.createElement(&#x27;div&#x27;);
+          choices.className = &#x27;choice-list&#x27;;
+          [[&#x27;true&#x27;, &#x27;Vrai&#x27;], [&#x27;false&#x27;, &#x27;Faux&#x27;]].forEach(([value, labelText]) =&gt; {
+            const id = question.id + &#x27;-&#x27; + value;
+            const label = document.createElement(&#x27;label&#x27;);
+            label.className = &#x27;choice-row&#x27;;
+            label.htmlFor = id;
+            const input = document.createElement(&#x27;input&#x27;);
+            input.type = &#x27;radio&#x27;;
+            input.name = question.id;
+            input.id = id;
+            input.value = value;
+            input.checked = Boolean(saved &amp;&amp; saved.choice === value);
+            input.addEventListener(&#x27;change&#x27;, () =&gt; {
+              const current = state.answers[question.id] || {};
+              saveAnswer(question, { choice: value, justification: current.justification || &#x27;&#x27; });
+            });
+            const span = document.createElement(&#x27;span&#x27;);
+            span.textContent = labelText;
+            label.append(input, span);
+            choices.appendChild(label);
+          });
+          const justifyLabel = document.createElement(&#x27;label&#x27;);
+          justifyLabel.className = &#x27;form-label&#x27;;
+          justifyLabel.htmlFor = question.id + &#x27;-justification&#x27;;
+          justifyLabel.textContent = &#x27;Justification&#x27;;
+          const textarea = document.createElement(&#x27;textarea&#x27;);
+          textarea.className = &#x27;form-control&#x27;;
+          textarea.id = question.id + &#x27;-justification&#x27;;
+          textarea.rows = 4;
+          textarea.placeholder = &#x27;Explique pourquoi…&#x27;;
+          textarea.value = saved ? saved.justification || &#x27;&#x27; : &#x27;&#x27;;
+          textarea.addEventListener(&#x27;input&#x27;, () =&gt; {
+            const current = state.answers[question.id] || {};
+            saveAnswer(question, { choice: current.choice || &#x27;&#x27;, justification: textarea.value });
+          });
+          answerArea.append(choices, justifyLabel, textarea);
+        } else {
+          const label = document.createElement(&#x27;label&#x27;);
+          label.className = &#x27;form-label&#x27;;
+          label.htmlFor = &#x27;answer-&#x27; + question.id;
+          label.textContent = question.type === &#x27;code&#x27; ? &#x27;Ton code C#&#x27; : &#x27;Ta réponse&#x27;;
+          const longAnswer = [&#x27;definition&#x27;, &#x27;long_text&#x27;, &#x27;code&#x27;].includes(question.type);
+          const input = longAnswer ? document.createElement(&#x27;textarea&#x27;) : document.createElement(&#x27;input&#x27;);
+          input.className = &#x27;form-control&#x27; + (longAnswer ? &#x27;&#x27; : &#x27; short-answer&#x27;);
+          input.id = &#x27;answer-&#x27; + question.id;
+          input.value = saved || &#x27;&#x27;;
+          input.placeholder = question.type === &#x27;code&#x27; ? &#x27;Écris ton code ici…&#x27; : &#x27;Saisis ta réponse…&#x27;;
+          if (longAnswer) input.rows = question.type === &#x27;code&#x27; ? 9 : 6;
+          input.addEventListener(&#x27;input&#x27;, () =&gt; saveAnswer(question, input.value));
+          answerArea.append(label, input);
+        }
+
+        $(&#x27;#flag-question&#x27;).checked = Boolean(state.flagged[question.id]);
+        $(&#x27;#prev-button&#x27;).disabled = state.current === 0;
+        $(&#x27;#next-button&#x27;).textContent = state.current === EXAM.questions.length - 1 ? &#x27;Voir le récapitulatif&#x27; : &#x27;Suivante&#x27;;
+        updateProgress();
+        renderNavigation();
+      }
+
+      function saveAnswer(question, value) {
+        state.answers[question.id] = value;
+        updateProgress();
+        renderNavigation();
+      }
+
+      function updateProgress() {
+        const count = answeredCount();
+        $(&#x27;#progress-label&#x27;).textContent = count + &#x27; sur &#x27; + EXAM.questions.length + &#x27; répondue&#x27; + (count &gt; 1 ? &#x27;s&#x27; : &#x27;&#x27;);
+        $(&#x27;#progress-fill&#x27;).style.width = ((count / EXAM.questions.length) * 100) + &#x27;%&#x27;;
+      }
+
+      function goToQuestion(index) {
+        state.current = Math.max(0, Math.min(EXAM.questions.length - 1, index));
+        showScreen(&#x27;quiz&#x27;);
+        renderQuestion();
+        $(&#x27;#question-title&#x27;).focus?.();
+        announce(&#x27;Question &#x27; + (state.current + 1));
+      }
+
+      function renderReview() {
+        const count = answeredCount();
+        $(&#x27;#review-count&#x27;).textContent = count + &#x27;/&#x27; + EXAM.questions.length + &#x27; répondues&#x27;;
+        const list = $(&#x27;#review-list&#x27;);
+        list.innerHTML = &#x27;&#x27;;
+        EXAM.questions.forEach((question, index) =&gt; {
+          const item = document.createElement(&#x27;div&#x27;);
+          item.className = &#x27;review-item&#x27;;
+          const title = document.createElement(&#x27;strong&#x27;);
+          title.textContent = (index + 1) + &#x27;. &#x27; + question.title + &#x27; — &#x27; + question.points + &#x27; pt&#x27; + (question.points &gt; 1 ? &#x27;s&#x27; : &#x27;&#x27;);
+          const preview = document.createElement(&#x27;p&#x27;);
+          preview.className = &#x27;answer-preview text-small&#x27;;
+          preview.textContent = answerSummary(question);
+          const button = document.createElement(&#x27;button&#x27;);
+          button.className = &#x27;btn btn-ghost&#x27;;
+          button.type = &#x27;button&#x27;;
+          button.textContent = &#x27;Modifier&#x27;;
+          button.addEventListener(&#x27;click&#x27;, () =&gt; goToQuestion(index));
+          item.append(title, preview, button);
+          list.appendChild(item);
+        });
+        const missing = missingQuestions();
+        const box = $(&#x27;#validation-message&#x27;);
+        if (missing.length) {
+          box.classList.remove(&#x27;hidden&#x27;);
+          box.textContent = &#x27;Il reste &#x27; + missing.length + &#x27; question&#x27; + (missing.length &gt; 1 ? &#x27;s obligatoires&#x27; : &#x27; obligatoire&#x27;) + &#x27; sans réponse. Tu peux relire le récapitulatif puis revenir les compléter.&#x27;;
+        } else {
+          box.classList.add(&#x27;hidden&#x27;);
+          box.textContent = &#x27;&#x27;;
+        }
+        showScreen(&#x27;review&#x27;);
+      }
+
+      function formatDuration(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const remainder = seconds % 60;
+        return minutes + &#x27; min &#x27; + String(remainder).padStart(2, &#x27;0&#x27;) + &#x27; s&#x27;;
+      }
+
+      function updateTimer() {
+        if (!state.timerEnabled || !state.deadline || state.submittedAt) return;
+        const remaining = Math.max(0, Math.ceil((state.deadline - Date.now()) / 1000));
+        const minutes = Math.floor(remaining / 60);
+        const seconds = remaining % 60;
+        $(&#x27;#timer-value&#x27;).textContent = String(minutes).padStart(2, &#x27;0&#x27;) + &#x27;:&#x27; + String(seconds).padStart(2, &#x27;0&#x27;);
+        $(&#x27;#timer-value&#x27;).classList.toggle(&#x27;is-low&#x27;, remaining &lt;= 300);
+        if (remaining === 0) {
+          clearInterval(state.timerHandle);
+          renderReview();
+          $(&#x27;#validation-message&#x27;).classList.remove(&#x27;hidden&#x27;);
+          $(&#x27;#validation-message&#x27;).textContent = &#x27;Le temps conseillé est écoulé. Complète les réponses manquantes si ton professeur l’autorise, puis valide.&#x27;;
+          announce(&#x27;Le temps conseillé est écoulé.&#x27;);
+        }
+      }
+
+      function normalizeAnswer(question, answer) {
+        if (question.type === &#x27;true_false_justify&#x27;) {
+          return {
+            choix: answer?.choice === &#x27;true&#x27; ? &#x27;vrai&#x27; : answer?.choice === &#x27;false&#x27; ? &#x27;faux&#x27; : &#x27;&#x27;,
+            justification: answer?.justification?.trim() || &#x27;&#x27;
+          };
+        }
+        return typeof answer === &#x27;string&#x27; ? answer.trim() : &#x27;&#x27;;
+      }
+
+      function createPayload() {
+        const durationSeconds = Math.max(0, Math.round((state.submittedAt - state.startedAt) / 1000));
+        return {
+          format: &#x27;interro-csharp-reponses&#x27;,
+          schemaVersion: 1,
+          interrogation: {
+            id: EXAM.id,
+            titre: EXAM.title,
+            version: EXAM.version,
+            totalPoints: totalPoints(),
+            nombreQuestions: EXAM.questions.length
+          },
+          eleve: {
+            nomComplet: state.studentName,
+            classe: state.studentClass
+          },
+          session: {
+            debut: new Date(state.startedAt).toISOString(),
+            fin: new Date(state.submittedAt).toISOString(),
+            dureeSecondes: durationSeconds,
+            chronometreActive: state.timerEnabled
+          },
+          correction: {
+            statut: &#x27;a_corriger&#x27;,
+            noteAttribuee: null,
+            commentaireGeneral: &#x27;&#x27;
+          },
+          reponses: EXAM.questions.map((question, index) =&gt; ({
+            numero: index + 1,
+            questionId: question.id,
+            type: question.type,
+            intitule: question.prompt,
+            pointsMaximum: question.points,
+            reponseEleve: normalizeAnswer(question, state.answers[question.id]),
+            marqueeARevoir: Boolean(state.flagged[question.id]),
+            evaluation: {
+              pointsAttribues: null,
+              statut: &#x27;non_evalue&#x27;,
+              commentaire: &#x27;&#x27;
+            }
+          }))
+        };
+      }
+
+      function finalizeExam() {
+        const missing = missingQuestions();
+        if (missing.length) {
+          renderReview();
+          $(&#x27;#validation-message&#x27;).classList.remove(&#x27;hidden&#x27;);
+          $(&#x27;#validation-message&#x27;).textContent = &#x27;Validation impossible : réponds aux &#x27; + missing.length + &#x27; question&#x27; + (missing.length &gt; 1 ? &#x27;s obligatoires&#x27; : &#x27; obligatoire&#x27;) + &#x27; restante&#x27; + (missing.length &gt; 1 ? &#x27;s&#x27; : &#x27;&#x27;) + &#x27;.&#x27;;
+          return;
+        }
+        state.submittedAt = Date.now();
+        clearInterval(state.timerHandle);
+        state.finalPayload = createPayload();
+        const seconds = Math.round((state.submittedAt - state.startedAt) / 1000);
+        $(&#x27;#result-student&#x27;).textContent = state.studentName;
+        $(&#x27;#result-answered&#x27;).textContent = answeredCount() + &#x27;/&#x27; + EXAM.questions.length;
+        $(&#x27;#result-duration&#x27;).textContent = formatDuration(seconds);
+        $(&#x27;#result-message&#x27;).textContent = &#x27;Merci &#x27; + state.studentName + &#x27;. Exporte maintenant le fichier JSON et remets-le selon les consignes de ton professeur.&#x27;;
+        $(&#x27;#header-status&#x27;).textContent = &#x27;Terminée&#x27;;
+        showScreen(&#x27;result&#x27;);
+        announce(&#x27;Interrogation validée. Les réponses peuvent être exportées.&#x27;);
+      }
+
+      function safeFilename(value) {
+        return value.normalize(&#x27;NFD&#x27;).replace(/[\u0300-\u036f]/g, &#x27;&#x27;).replace(/[^a-zA-Z0-9_-]+/g, &#x27;-&#x27;).replace(/^-+|-+$/g, &#x27;&#x27;).toLowerCase() || &#x27;eleve&#x27;;
+      }
+
+      function jsonText() {
+        return JSON.stringify(state.finalPayload, null, 2);
+      }
+
+      function exportJson() {
+        const blob = new Blob([jsonText()], { type: &#x27;application/json;charset=utf-8&#x27; });
+        const url = URL.createObjectURL(blob);
+        const anchor = document.createElement(&#x27;a&#x27;);
+        anchor.href = url;
+        anchor.download = &#x27;reponses-csharp-&#x27; + safeFilename(state.studentName) + &#x27;.json&#x27;;
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+        setTimeout(() =&gt; URL.revokeObjectURL(url), 1000);
+        $(&#x27;#export-status&#x27;).textContent = &#x27;Le fichier JSON a été préparé.&#x27;;
+      }
+
+      async function copyJson() {
+        try {
+          await navigator.clipboard.writeText(jsonText());
+          $(&#x27;#export-status&#x27;).textContent = &#x27;Le JSON a été copié dans le presse-papiers.&#x27;;
+        } catch (error) {
+          const textarea = document.createElement(&#x27;textarea&#x27;);
+          textarea.value = jsonText();
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand(&#x27;copy&#x27;);
+          textarea.remove();
+          $(&#x27;#export-status&#x27;).textContent = &#x27;Le JSON a été copié dans le presse-papiers.&#x27;;
+        }
+      }
+
+      $(&#x27;#start-form&#x27;).addEventListener(&#x27;submit&#x27;, (event) =&gt; {
+        event.preventDefault();
+        const name = $(&#x27;#student-name&#x27;).value.trim();
+        if (!name) {
+          $(&#x27;#start-error&#x27;).classList.remove(&#x27;hidden&#x27;);
+          $(&#x27;#student-name&#x27;).focus();
+          return;
+        }
+        $(&#x27;#start-error&#x27;).classList.add(&#x27;hidden&#x27;);
+        state.studentName = name;
+        state.studentClass = $(&#x27;#student-class&#x27;).value.trim();
+        state.timerEnabled = $(&#x27;#timer-enabled&#x27;).checked;
+        state.startedAt = Date.now();
+        state.deadline = state.timerEnabled ? state.startedAt + EXAM.durationMinutes * 60 * 1000 : null;
+        $(&#x27;#timer-wrap&#x27;).classList.toggle(&#x27;hidden&#x27;, !state.timerEnabled);
+        $(&#x27;#header-status&#x27;).textContent = &#x27;En cours&#x27;;
+        if (state.timerEnabled) {
+          updateTimer();
+          state.timerHandle = setInterval(updateTimer, 1000);
+        }
+        renderQuestion();
+        showScreen(&#x27;quiz&#x27;);
+        announce(&#x27;Interrogation commencée. Question 1.&#x27;);
+      });
+
+      $(&#x27;#prev-button&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; goToQuestion(state.current - 1));
+      $(&#x27;#next-button&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+        if (state.current === EXAM.questions.length - 1) renderReview();
+        else goToQuestion(state.current + 1);
+      });
+      $(&#x27;#finish-button&#x27;).addEventListener(&#x27;click&#x27;, renderReview);
+      $(&#x27;#review-button&#x27;).addEventListener(&#x27;click&#x27;, renderReview);
+      $(&#x27;#back-to-quiz&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; goToQuestion(state.current));
+      $(&#x27;#submit-exam&#x27;).addEventListener(&#x27;click&#x27;, finalizeExam);
+      $(&#x27;#flag-question&#x27;).addEventListener(&#x27;change&#x27;, (event) =&gt; {
+        const question = EXAM.questions[state.current];
+        state.flagged[question.id] = event.target.checked;
+        renderNavigation();
+      });
+      $(&#x27;#export-json&#x27;).addEventListener(&#x27;click&#x27;, exportJson);
+      $(&#x27;#copy-json&#x27;).addEventListener(&#x27;click&#x27;, copyJson);
+
+      $(&#x27;#header-status&#x27;).textContent = &#x27;Non commencée&#x27;;
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>
